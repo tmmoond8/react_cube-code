@@ -5,8 +5,12 @@ import React from 'react';
 
 class Square extends React.Component {
     render() {
+        let style = {
+            background: this.props.isMark ? 'black' : 'none'
+        }
+
         return (
-            <div className="square">{this.props.idx}</div>
+            <div className="square" style={style}></div>
         )
     }
 }

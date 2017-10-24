@@ -9,11 +9,14 @@ import Square from './Square';
 class Board extends Component {
     constructor(props) {
         super(props);
+
+        FileReader
+
         this.state = {
             squares : [
-                [1, 2, 3, 4, 5],
-                [6, 7, 8, 9, 0],
-                [1, 2, 3, 4, 5],
+                "11111111111".split(""),
+                "10000000001".split(""),
+                "10000000001".split(""),
                 [6, 7, 8, 9, 0],
                 [1, 2, 3, 4, 5],
             ]
@@ -21,16 +24,16 @@ class Board extends Component {
     }
 
     renderSquare = (idx) => {
-        return <Square idx={idx}/>
+        return <Square isMark={idx === '1' ? true : false}/>
     };
 
     renderRow = (row) => {
         return (
-            <div>
+            <div className="board-row">
                 {this.state.squares[row].map((data) => this.renderSquare(data))}
             </div>
         )
-    }
+    };
 
     render() {
         return (

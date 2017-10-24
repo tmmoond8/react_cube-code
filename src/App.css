@@ -46,3 +46,10 @@
 .square:focus {
   outline: none;
 }
+
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
