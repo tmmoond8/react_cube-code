@@ -4,22 +4,18 @@
 import React, {Component} from 'react';
 import Square from './Square';
 
-
-
 class Board extends Component {
     constructor(props) {
         super(props);
 
-        FileReader
-
         this.state = {
-            squares : [
-                "11111111111".split(""),
-                "10000000001".split(""),
-                "10000000001".split(""),
-                [6, 7, 8, 9, 0],
-                [1, 2, 3, 4, 5],
-            ]
+            squares : this.props.squares
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.squares !== this.state.squares) {
+            this.setState({ squares: nextProps.squares });
         }
     }
 
@@ -35,14 +31,18 @@ class Board extends Component {
         )
     };
 
+    renderBoard = () => {
+        return (
+            <div>
+                {this.state.squares.map((data, idx) => this.renderRow(idx))}
+            </div>
+        )
+    };
+
     render() {
         return (
             <div>
-                {this.renderRow(0)}
-                {this.renderRow(1)}
-                {this.renderRow(2)}
-                {this.renderRow(3)}
-                {this.renderRow(4)}
+                {this.renderBoard()}
             </div>
         )
     }
