@@ -26,3 +26,30 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 17px;
+  height: 17px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 17px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+
+.board-row::after {
+  clear: both;
+  content: "";
+  display: table;
+}
