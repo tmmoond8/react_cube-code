@@ -7,26 +7,35 @@ import Square from './Square';
 class Board extends Component {
     constructor(props) {
         super(props);
+        let squares = [];
+        if (!props.squares) {
+            for (let i = 0; i < 11; i++) {
+                squares.push("00000000000".split(""));
+            }
+        } else {
+            squares = props.squares;
+        }
 
         this.state = {
-            squares : this.props.squares
+            squares: squares
         }
     }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.squares !== this.state.squares) {
             this.setState({ squares: nextProps.squares });
         }
     }
 
-    renderSquare = (idx) => {
-        return <Square isMark={idx === '1' ? true : false}/>
+    renderSquare = (row, idx) => {
+        return <Square
+            onClick={this.props.onClick}
+            row={row} idx={idx} value={this.state.squares[row][idx]}/>
     };
 
     renderRow = (row) => {
         return (
             <div className="board-row">
-                {this.state.squares[row].map((data) => this.renderSquare(data))}
+                {this.state.squares[row].map((data, idx) => this.renderSquare(row, idx))}
             </div>
         )
     };
@@ -34,12 +43,13 @@ class Board extends Component {
     renderBoard = () => {
         return (
             <div>
-                {this.state.squares.map((data, idx) => this.renderRow(idx))}
+                {this.state.squares.map((data, row) => this.renderRow(row))}
             </div>
         )
     };
 
     render() {
+        this.props.onClick();
         return (
             <div>
                 {this.renderBoard()}

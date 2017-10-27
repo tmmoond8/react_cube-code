@@ -10,17 +10,12 @@ import UTF8 from 'utf8';
 class Game extends Component {
     constructor(props) {
         super(props);
-        let squares = [];
-        for (let i = 0; i < 11; i++) {
-            squares.push("00000000000".split(""));
-        }
         this.state = {
-            squares: squares
+            squares : null
         }
     }
 
     handleFiles = (files) => {
-
         let base64Data = files.base64;
         if (base64Data) {
             let bytes = BASE64.decode(base64Data.split(',')[1]);
@@ -31,21 +26,26 @@ class Game extends Component {
                 loadSqaures.push(row.split(""));
             });
             this.setState({
-                squares: loadSqaures,
-            });
+                squares: loadSqaures
+            })
         }
 
         files.base64 = null;
         files.fileList = [];
     };
 
+    handleClick = (row, idx) => {
+        // console.log(this.state.squares);
+        console.log(row, idx);
+    };
+
     render() {
         return (
             <div>
-                <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleFiles}>
+                <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleFiles.bind(this)}>
                     <button className='btn'>Load</button>
                 </ReactFileReader>
-                <Board squares={this.state.squares}></Board>
+                <Board onClick={this.handleClick} squares={this.state.squares}></Board>
             </div>
         )
     }
