@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import Board from './Board';
 import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
-import UTF8 from 'utf8';
 
 class Game extends Component {
     constructor(props) {
@@ -15,15 +14,19 @@ class Game extends Component {
         }
     }
 
+    getValue = (originValue) => {
+        return originValue === "0" || originValue === false ? false : true;
+    };
+
     handleFiles = (files) => {
         let base64Data = files.base64;
         if (base64Data) {
             let bytes = BASE64.decode(base64Data.split(',')[1]);
-            let text = UTF8.decode(bytes);
-            let textArray = text.split("\n");
+            let textArray = bytes.split("\n");
             let loadSqaures = [];
+            let that = this;
             textArray.map(function(row) {
-                loadSqaures.push(row.split(""));
+                loadSqaures.push(row.split("").map((originValue) => that.getValue(originValue)));
             });
             this.setState({
                 squares: loadSqaures
@@ -35,7 +38,6 @@ class Game extends Component {
     };
 
     handleClick = (row, idx) => {
-        // console.log(this.state.squares);
         console.log(row, idx);
     };
 
