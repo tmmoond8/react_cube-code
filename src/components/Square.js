@@ -11,17 +11,13 @@ class Square extends React.Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        if (this.getValue(nextProps.value) !== this.getValue(this.state.value)) {
+        if (nextProps.value !== this.state.value) {
             this.setState({ value: nextProps.value });
         }
     }
 
-    getValue = (originValue) => {
-        return originValue === "0" || originValue === false ? false : true;
-    };
-
     getStyle = () => {
-        return { background: this.getValue(this.state.value) ? 'black' : 'none'}
+        return { background: this.state.value ? 'black' : 'none'}
     };
 
     handleClick = () => {
