@@ -3,18 +3,19 @@
  */
 import React, {Component} from 'react';
 import Board from './Board';
+import FourBoards from './FourBoards';
 import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
 import UTF8 from 'utf8';
 import fileSaver from 'file-saver';
 
-class Game extends Component {
+class GameManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
             board: this.createEmptyBoard(),
             collectAnswer: "",
-            quizBoard: [
+            quizBoards: [
                 this.createEmptyBoard(), this.createEmptyBoard(),
                 this.createEmptyBoard(), this.createEmptyBoard(),
             ]
@@ -40,14 +41,14 @@ class Game extends Component {
     };
 
     handleLoadFiles = (files) => {
-        let base64Data = files.base64;
+        const base64Data = files.base64;
         if (base64Data) {
             let bytes = BASE64.decode(base64Data.split(',')[1]);
             bytes = bytes.split(":");
-            let collectAnswer = UTF8.decode(bytes[1]);
-            let textArray = bytes[0].split("\n");
+            const collectAnswer = UTF8.decode(bytes[1]);
+            const textArray = bytes[0].split("\n");
             let loadSqaures = [];
-            let that = this;
+            const that = this;
             textArray.map(function(row) {
                 loadSqaures.push(
                     row.split("")
@@ -84,7 +85,7 @@ class Game extends Component {
             }).join("");
         }).join("\n");
         board += ":" + this.state.collectAnswer;
-        let blob = new Blob([board], {type: "text/plain;charset=utf-8"});
+        const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
         fileSaver.saveAs(blob, "cube-code-data.txt");
         this.setState({
             collectAnswer: ""
@@ -92,7 +93,7 @@ class Game extends Component {
     };
 
     handleClickGameStart = (gameMode) => {
-        let codeData = this.getBoardData();
+        const codeData = this.getBoardData();
         let quardBoards = [this.createEmptyBoard(), this.createEmptyBoard(),
             this.createEmptyBoard(), this.createEmptyBoard()
         ];
@@ -111,12 +112,12 @@ class Game extends Component {
         }
 
         this.setState({
-            quizBoard: quardBoards
+            quizBoards: quardBoards
         })
     };
 
     getBoardData = () => {
-        let board = Array.prototype.slice.call(this.state.board);
+        const board = Array.prototype.slice.call(this.state.board);
         let codeData = [];
         board.forEach((row, rowIndex) => {
             row.forEach((value, columnIndex) => {
@@ -132,6 +133,10 @@ class Game extends Component {
     }
 
     render() {
+        const style = {
+            display: 'table',
+            float: 'center'
+        };
         return (
             <div>
                 <div className="Game-admin-menu">
@@ -142,18 +147,15 @@ class Game extends Component {
                     <button className="Game-menu-btn" onClick={this.handleSaveBoard}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
-                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this)}>Easy Game Start</button>
-                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this, 'nomal')}>Nomal Game Start</button>
-                    <div className="Game-boards">
-                        <Board boardKey="FireBrick " squares={this.state.quizBoard[0]} onClick={() => null}></Board>
-                        <Board boardKey="Yellow" squares={this.state.quizBoard[1]} onClick={() => null}></Board>
-                        <Board boardKey="YellowGreen" squares={this.state.quizBoard[2]} onClick={() => null}></Board>
-                        <Board boardKey="DarkTurquoise" squares={this.state.quizBoard[3]} onClick={() => null}></Board>
+                    <div style={style}>
+                        <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this)}>Easy Game Start</button>
+                        <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this, 'nomal')}>Nomal Game Start</button>
                     </div>
+                    <FourBoards boards={this.state.quizBoards}></FourBoards>
                 </div>
             </div>
         )
     }
 }
 
-export default Game;
+export default GameManager;
