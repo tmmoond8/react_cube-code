@@ -1,3 +1,7 @@
+div{
+  display: inline;
+}
+
 .App {
   text-align: center;
 }
@@ -28,7 +32,7 @@
 }
 
 
-.square {
+.Square-square {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -43,13 +47,28 @@
   width: 17px;
 }
 
-.square:focus {
+.Square-square:focus {
   outline: none;
 }
 
+.Game-menu-btn {
+  margin: 1em;
+  background-color: #555555; /* Black */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 16px;
+}
 
-.board-row::after {
+.Board-board-row::after {
   clear: both;
   content: "";
   display: table;
+}
+
+.Game-admin-menu {
+  display: block;
 }
