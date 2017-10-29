@@ -7,7 +7,7 @@ class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: props.value === "0" ? false : true
+            value: props.value
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -29,7 +29,7 @@ class Square extends React.Component {
 
     render() {
         return (
-            <div onClick={this.handleClick} className="square" style={this.getStyle()}></div>
+            <div onClick={this.handleClick} className="Square-square" style={this.getStyle()}></div>
         )
     }
 }

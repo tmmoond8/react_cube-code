@@ -7,17 +7,8 @@ import Square from './Square';
 class Board extends Component {
     constructor(props) {
         super(props);
-        let squares = [];
-        if (!props.squares) {
-            for (let i = 0; i < 11; i++) {
-                squares.push("00000000000".split(""));
-            }
-        } else {
-            squares = props.squares;
-        }
-
         this.state = {
-            squares: squares
+            squares: props.squares
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -34,7 +25,7 @@ class Board extends Component {
 
     renderRow = (row) => {
         return (
-            <div className="board-row">
+            <div className="Board-board-row">
                 {this.state.squares[row].map((data, idx) => this.renderSquare(row, idx))}
             </div>
         )
@@ -49,7 +40,6 @@ class Board extends Component {
     };
 
     render() {
-        this.props.onClick();
         return (
             <div>
                 {this.renderBoard()}
