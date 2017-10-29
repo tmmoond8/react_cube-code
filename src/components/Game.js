@@ -12,12 +12,16 @@ class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            squares: this.createEmptySquares(),
+            board: this.createEmptyBoard(),
             collectAnswer: "",
+            quizBoard: [
+                this.createEmptyBoard(), this.createEmptyBoard(),
+                this.createEmptyBoard(), this.createEmptyBoard(),
+            ]
         }
     }
 
-    createEmptySquares = () => {
+    createEmptyBoard = () => {
         let squares = [];
         for (let i = 0; i < 11; i++) {
             squares.push("00000000000".split("").map((originValue) => this.getValue(originValue)));
@@ -51,7 +55,7 @@ class Game extends Component {
                     .map((originValue) => that.getValue(originValue)));
             });
             this.setState({
-                squares: loadSqaures,
+                board: loadSqaures,
                 collectAnswer: collectAnswer
             })
         }
@@ -60,16 +64,17 @@ class Game extends Component {
         files.fileList = [];
     };
 
-    handleSquareClick = (row, idx) => {
-        let board = Array.prototype.slice.call(this.state.squares);
+    handleClickSquare = (row, idx) => {
+        let board = Array.prototype.slice.call(this.state.board);
         board[row][idx] = !board[row][idx];
         this.setState({
-            squares : board
+            board : board
         });
     };
 
     handleSaveBoard = () => {
-        let board = this.state.squares.map((row) => {
+        if (this.state.collectAnswer.length < 1) return;
+        let board = this.state.board.map((row) => {
             return row.map((value) => {
                 if(value === true) {
                     return "1"
@@ -86,18 +91,66 @@ class Game extends Component {
         })
     };
 
+    handleClickGameStart = (gameMode) => {
+        let codeData = this.getBoardData();
+        let quardBoards = [this.createEmptyBoard(), this.createEmptyBoard(),
+            this.createEmptyBoard(), this.createEmptyBoard()
+        ];
+        if (gameMode === 'nomal') {
+            let i = 0;
+            while(codeData.length > 0) {
+                let randomIndex = Math.floor(Math.random()*4827318 % codeData.length);
+                let squareData = codeData[randomIndex];
+                quardBoards[i++ % 4][squareData.row][squareData.idx] = true;
+                codeData.splice(randomIndex, 1);
+            }
+        } else {
+            codeData.forEach((squareData, index) => {
+                quardBoards[index % 4][squareData.row][squareData.idx] = true;
+            });
+        }
+
+        this.setState({
+            quizBoard: quardBoards
+        })
+    };
+
+    getBoardData = () => {
+        let board = Array.prototype.slice.call(this.state.board);
+        let codeData = [];
+        board.forEach((row, rowIndex) => {
+            row.forEach((value, columnIndex) => {
+                if (value) {
+                    codeData.push({
+                        row: rowIndex,
+                        idx: columnIndex,
+                    });
+                }
+            })
+        });
+        return codeData;
+    }
+
     render() {
         return (
             <div>
                 <div className="Game-admin-menu">
+                    <Board boardKey="main" onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
                     <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleLoadFiles.bind(this)}>
                         <button className='Game-menu-btn'>Load</button>
                     </ReactFileReader>
                     <button className="Game-menu-btn" onClick={this.handleSaveBoard}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
+                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this)}>Easy Game Start</button>
+                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this, 'nomal')}>Nomal Game Start</button>
+                    <div className="Game-boards">
+                        <Board boardKey="FireBrick " squares={this.state.quizBoard[0]} onClick={() => null}></Board>
+                        <Board boardKey="Yellow" squares={this.state.quizBoard[1]} onClick={() => null}></Board>
+                        <Board boardKey="YellowGreen" squares={this.state.quizBoard[2]} onClick={() => null}></Board>
+                        <Board boardKey="DarkTurquoise" squares={this.state.quizBoard[3]} onClick={() => null}></Board>
+                    </div>
                 </div>
-                <Board onClick={this.handleSquareClick.bind(this)} squares={this.state.squares}></Board>
             </div>
         )
     }

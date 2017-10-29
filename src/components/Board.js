@@ -19,6 +19,7 @@ class Board extends Component {
 
     renderSquare = (row, idx) => {
         return <Square
+            boardKey={this.props.boardKey}
             onClick={this.props.onClick}
             row={row} idx={idx} value={this.state.squares[row][idx]}/>
     };
@@ -41,7 +42,7 @@ class Board extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Board-board">
                 {this.renderBoard()}
             </div>
         )

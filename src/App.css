@@ -69,6 +69,15 @@ div{
   display: table;
 }
 
+.Game-boards {
+  display: block;
+}
+
+.Board-board {
+  margin: 1em;
+  display: inline-grid;
+}
+
 .Game-admin-menu {
   display: block;
 }
