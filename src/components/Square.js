@@ -9,6 +9,12 @@ class Square extends React.Component {
         this.state = {
             value: props.value
         }
+        this.color = '';
+        if(this.props.boardKey === "main") {
+            this.color = 'black';
+        } else {
+            this.color = this.props.boardKey;
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.state.value) {
@@ -17,10 +23,11 @@ class Square extends React.Component {
     }
 
     getStyle = () => {
-        return { background: this.state.value ? 'black' : 'none'}
+        return { background: this.state.value ? this.color : 'none'}
     };
 
     handleClick = () => {
+        if (this.props.boardKey !== "main") return;
         this.props.onClick(this.props.row, this.props.idx);
         this.setState({
             value: !this.state.value
