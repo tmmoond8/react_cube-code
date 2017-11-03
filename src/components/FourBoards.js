@@ -9,10 +9,10 @@ class FourBoards extends Component {
         super(props);
         this.state = {
             boards: [
-                this.props.createEmptyBoard(),
-                this.props.createEmptyBoard(),
-                this.props.createEmptyBoard(),
-                this.props.createEmptyBoard(),
+                Board.createEmptyBoard(),
+                Board.createEmptyBoard(),
+                Board.createEmptyBoard(),
+                Board.createEmptyBoard(),
             ]
         }
     }
@@ -36,10 +36,10 @@ class FourBoards extends Component {
     handleClickGameStart = (gameMode) => {
         const codeData = this.getBoardData();
         let quardBoards = [
-            this.props.createEmptyBoard(),
-            this.props.createEmptyBoard(),
-            this.props.createEmptyBoard(),
-            this.props.createEmptyBoard(),
+            Board.createEmptyBoard(),
+            Board.createEmptyBoard(),
+            Board.createEmptyBoard(),
+            Board.createEmptyBoard(),
         ];
         if (gameMode === 'nomal') {
             let i = 0;
