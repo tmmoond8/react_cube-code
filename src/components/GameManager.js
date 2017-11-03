@@ -15,11 +15,8 @@ class GameManager extends Component {
         this.state = {
             board: this.createEmptyBoard(),
             collectAnswer: "",
-            quizBoards: [
-                this.createEmptyBoard(), this.createEmptyBoard(),
-                this.createEmptyBoard(), this.createEmptyBoard(),
-            ]
         }
+        this.createEmptyBoard = this.createEmptyBoard.bind(this);
     }
 
     createEmptyBoard = () => {
@@ -92,51 +89,7 @@ class GameManager extends Component {
         })
     };
 
-    handleClickGameStart = (gameMode) => {
-        const codeData = this.getBoardData();
-        let quardBoards = [this.createEmptyBoard(), this.createEmptyBoard(),
-            this.createEmptyBoard(), this.createEmptyBoard()
-        ];
-        if (gameMode === 'nomal') {
-            let i = 0;
-            while(codeData.length > 0) {
-                let randomIndex = Math.floor(Math.random()*4827318 % codeData.length);
-                let squareData = codeData[randomIndex];
-                quardBoards[i++ % 4][squareData.row][squareData.idx] = true;
-                codeData.splice(randomIndex, 1);
-            }
-        } else {
-            codeData.forEach((squareData, index) => {
-                quardBoards[index % 4][squareData.row][squareData.idx] = true;
-            });
-        }
-
-        this.setState({
-            quizBoards: quardBoards
-        })
-    };
-
-    getBoardData = () => {
-        const board = Array.prototype.slice.call(this.state.board);
-        let codeData = [];
-        board.forEach((row, rowIndex) => {
-            row.forEach((value, columnIndex) => {
-                if (value) {
-                    codeData.push({
-                        row: rowIndex,
-                        idx: columnIndex,
-                    });
-                }
-            })
-        });
-        return codeData;
-    }
-
     render() {
-        const style = {
-            display: 'table',
-            float: 'center'
-        };
         return (
             <div>
                 <div className="Game-admin-menu">
@@ -147,11 +100,7 @@ class GameManager extends Component {
                     <button className="Game-menu-btn" onClick={this.handleSaveBoard}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
-                    <div style={style}>
-                        <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this)}>Easy Game Start</button>
-                        <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this, 'nomal')}>Nomal Game Start</button>
-                    </div>
-                    <FourBoards boards={this.state.quizBoards}></FourBoards>
+                    <FourBoards createEmptyBoard={this.createEmptyBoard} board={this.state.board}></FourBoards>
                 </div>
             </div>
         )
