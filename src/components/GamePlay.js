@@ -3,7 +3,6 @@
  */
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
-import fs from 'fs';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ class GamePlay extends Component {
         //         console.log(data);
         //     }
         // });
-        const data = fs.r('../../public/cubeCodes/a.txt');
+        // const data = fs.r('../../public/cubeCodes/a.txt');
     }
 
     createEmptyBoard = () => {
