@@ -13,23 +13,10 @@ class GameManager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: this.createEmptyBoard(),
+            board: Board.createEmptyBoard(),
             collectAnswer: "",
         }
-        this.createEmptyBoard = this.createEmptyBoard.bind(this);
     }
-
-    createEmptyBoard = () => {
-        let squares = [];
-        for (let i = 0; i < 11; i++) {
-            squares.push("00000000000".split("").map((originValue) => this.getValue(originValue)));
-        }
-        return squares;
-    };
-
-    getValue = (originValue) => {
-        return originValue === "0" || originValue === false ? false : true;
-    };
 
     handleChangeCollectAnswer = (value) => {
         this.setState({
@@ -50,7 +37,7 @@ class GameManager extends Component {
                 loadSqaures.push(
                     row.split("")
                     .filter((value) =>  (value >= "0" && value <= "9"))
-                    .map((originValue) => that.getValue(originValue)));
+                    .map((originValue) => Board.getValue(originValue)));
             });
             this.setState({
                 board: loadSqaures,
@@ -100,7 +87,7 @@ class GameManager extends Component {
                     <button className="Game-menu-btn" onClick={this.handleSaveBoard}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
-                    <FourBoards createEmptyBoard={this.createEmptyBoard} board={this.state.board}></FourBoards>
+                    <FourBoards board={this.state.board}></FourBoards>
                 </div>
             </div>
         )

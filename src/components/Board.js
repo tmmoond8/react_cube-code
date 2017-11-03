@@ -17,6 +17,19 @@ class Board extends Component {
         }
     }
 
+    static createEmptyBoard = () => {
+        let squares = [];
+        for (let i = 0; i < 11; i++) {
+            squares.push("00000000000".split("").map((originValue) => Board.getValue(originValue)));
+        }
+        return squares;
+    };
+
+    static getValue = (originValue) => {
+        return originValue === "0" || originValue === false ? false : true;
+    };
+
+
     renderSquare = (row, idx) => {
         return <Square
             boardKey={this.props.boardKey}

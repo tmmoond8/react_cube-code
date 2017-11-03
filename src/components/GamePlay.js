@@ -3,13 +3,13 @@
  */
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
+import Board from './Board';
 
 class GamePlay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            boards : [this.createEmptyBoard(), this.createEmptyBoard(),
-            this.createEmptyBoard(), this.createEmptyBoard()]
+            board : Board.createEmptyBoard()
         }
         this.readFiles();
     }
@@ -25,21 +25,9 @@ class GamePlay extends Component {
         // const data = fs.r('../../public/cubeCodes/a.txt');
     }
 
-    createEmptyBoard = () => {
-        let squares = [];
-        for (let i = 0; i < 11; i++) {
-            squares.push("01010101010".split("").map((originValue) => this.getValue(originValue)));
-        }
-        return squares;
-    };
-
-    getValue = (originValue) => {
-        return originValue === "0" || originValue === false ? false : true;
-    };
-
     render() {
         return (
-            <FourBoards boards={this.state.boards}/>
+            <FourBoards board={this.state.board}/>
         )
     }
 }
