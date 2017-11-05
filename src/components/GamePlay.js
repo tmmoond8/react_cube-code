@@ -22,28 +22,15 @@ class GamePlay extends Component {
         let that = this;
         HttpClient.get('game/list')
             .then(function (result) {
-                that.convertText2Array(result.data[0].data, (gameArrayDataArray) => {
-                    that.setState({
-                        board: gameArrayDataArray
-                    })
-                });
+                let gameBoard = Board.convertText2Array(result.data[0].data);
+                that.setState({
+                    board: gameBoard
+                })
             })
             .catch(function (error) {
                 console.log('failed' + error);
             })
     };
-
-    convertText2Array = (text, fn) => {
-        const textArray = text.split("\n");
-        let loadSqaures = [];
-        textArray.map(function(row) {
-            loadSqaures.push(
-                row.split("")
-                    .filter((value) =>  (value >= "0" && value <= "9"))
-                    .map((originValue) => Board.getValue(originValue)));
-        });
-        fn(loadSqaures);
-    }
 
     render() {
         return (
