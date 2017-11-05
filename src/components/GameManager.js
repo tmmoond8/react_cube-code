@@ -8,6 +8,7 @@ import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
 import UTF8 from 'utf8';
 import fileSaver from 'file-saver';
+import HttpClient from './../HttpClient';
 
 class GameManager extends Component {
     constructor(props) {
@@ -58,15 +59,17 @@ class GameManager extends Component {
 
     handleSaveBoard = () => {
         if (this.state.collectAnswer.length < 1) return;
-        let board = this.state.board.map((row) => {
-            return row.map((value) => {
-                if(value === true) {
-                    return "1"
-                } else {
-                    return "0"
-                }
-            }).join("");
-        }).join("\n");
+        HttpClient.post('game/add', {
+            data: Board.convertArray2Text(this.state.board),
+            collectAnswer: this.state.collectAnswer,
+        })
+            .then( response => {console.dir(response)})
+            .catch(err => {console.dir(err)})
+    };
+
+    handleSaveBoard2File = () => {
+        if (this.state.collectAnswer.length < 1) return;
+        let board = Board.convertArray2Text(this.state.board);
         board += ":" + this.state.collectAnswer;
         const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
         fileSaver.saveAs(blob, "cube-code-data.txt");

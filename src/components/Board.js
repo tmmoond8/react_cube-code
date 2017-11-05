@@ -15,6 +15,31 @@ class Board extends Component {
         if (nextProps.squares !== this.state.squares) {
             this.setState({ squares: nextProps.squares });
         }
+    };
+
+    static convertText2Array = (text) => {
+        const textArray = text.split("\n");
+        let loadSqaures = [];
+        textArray.map(function(row) {
+            loadSqaures.push(
+                row.split("")
+                    .filter((value) =>  (value >= "0" && value <= "9"))
+                    .map((originValue) => Board.getValue(originValue)));
+        });
+        return loadSqaures;
+    };
+
+    static convertArray2Text = (array) => {
+        let board = array.map((row) => {
+            return row.map((value) => {
+                if(value === true) {
+                    return "1"
+                } else {
+                    return "0"
+                }
+            }).join("");
+        }).join("\n");
+        return board;
     }
 
     static createEmptyBoard = () => {
@@ -59,7 +84,7 @@ class Board extends Component {
                 {this.renderBoard()}
             </div>
         )
-    }
+    };
 }
 
 export default Board;
