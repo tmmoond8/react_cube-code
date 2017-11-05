@@ -32,7 +32,6 @@ class GameManager extends Component {
             const collectAnswer = UTF8.decode(bytes[1]);
             const textArray = bytes[0].split("\n");
             let loadSqaures = [];
-            const that = this;
             textArray.map(function(row) {
                 loadSqaures.push(
                     row.split("")

@@ -17,6 +17,12 @@ class FourBoards extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.board !== this.state.board) {
+            this.handleClickGameStart('nomal');
+        }
+    }
+
     getBoardData = () => {
         const board = Array.prototype.slice.call(this.props.board);
         let codeData = [];

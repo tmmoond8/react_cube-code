@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
 import Board from './Board';
+import HttpClient from './../HttpClient';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -11,23 +12,45 @@ class GamePlay extends Component {
         this.state = {
             board : Board.createEmptyBoard()
         }
-        this.readFiles();
     }
 
-    readFiles = () => {
-        // fs.readFile('../../public/cubeCodes/a.txt', null, (err, data) => {
-        //     if (err) {
-        //         return console.log(err);
-        //     } else {
-        //         console.log(data);
-        //     }
-        // });
-        // const data = fs.r('../../public/cubeCodes/a.txt');
+    componentDidMount() {
+        this.handleClickGameLoad();
+    }
+
+    handleClickGameLoad = () => {
+        let that = this;
+        HttpClient.get('game/list')
+            .then(function (result) {
+                that.convertText2Array(result.data[0].data, (gameArrayDataArray) => {
+                    that.setState({
+                        board: gameArrayDataArray
+                    })
+                });
+            })
+            .catch(function (error) {
+                console.log('failed' + error);
+            })
+    };
+
+    convertText2Array = (text, fn) => {
+        const textArray = text.split("\n");
+        let loadSqaures = [];
+        textArray.map(function(row) {
+            loadSqaures.push(
+                row.split("")
+                    .filter((value) =>  (value >= "0" && value <= "9"))
+                    .map((originValue) => Board.getValue(originValue)));
+        });
+        fn(loadSqaures);
     }
 
     render() {
         return (
-            <FourBoards board={this.state.board}/>
+            <div>
+                <button className="Game-menu-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
+                <FourBoards board={this.state.board}/>
+            </div>
         )
     }
 }
