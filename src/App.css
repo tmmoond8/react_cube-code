@@ -51,7 +51,7 @@ div{
   outline: none;
 }
 
-.Game-menu-btn {
+.Manager-btn {
   margin: 1em;
   background-color: #555555; /* Black */
   border: none;
@@ -78,6 +78,10 @@ div{
   display: inline-grid;
 }
 
-.Game-admin-menu {
+.Manager-menu {
   display: block;
+}
+
+.List-list {
+  display: inline-grid;
 }

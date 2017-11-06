@@ -18,6 +18,7 @@ class Board extends Component {
     };
 
     static convertText2Array = (text) => {
+        if (!text) return Board.createEmptyBoard();
         const textArray = text.split("\n");
         let loadSqaures = [];
         textArray.map(function(row) {
@@ -56,10 +57,12 @@ class Board extends Component {
 
 
     renderSquare = (row, idx) => {
-        return <Square
-            boardKey={this.props.boardKey}
-            onClick={this.props.onClick}
-            row={row} idx={idx} value={this.state.squares[row][idx]}/>
+        return (
+            <Square
+                boardKey={this.props.boardKey}
+                onClick={this.props.onClick}
+                row={row} idx={idx} value={this.state.squares[row][idx]}/>
+        )
     };
 
     renderRow = (row) => {

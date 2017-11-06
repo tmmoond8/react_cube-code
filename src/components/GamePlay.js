@@ -10,7 +10,8 @@ class GamePlay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board : Board.createEmptyBoard()
+            board : Board.createEmptyBoard(),
+            collectAnswer: '',
         }
     }
 
@@ -19,23 +20,21 @@ class GamePlay extends Component {
     }
 
     handleClickGameLoad = () => {
-        let that = this;
-        HttpClient.get('game/list')
-            .then(function (result) {
-                let gameBoard = Board.convertText2Array(result.data[0].data);
-                that.setState({
-                    board: gameBoard
-                })
-            })
-            .catch(function (error) {
-                console.log('failed' + error);
-            })
+        HttpClient.getGameList((gameList) => this.setState(
+            {
+                board: gameList[0].data,
+                collectAnswer: gameList[0].collectAnswer
+            }
+        ))
     };
 
     render() {
+        let style = {
+            display: 'block'
+        }
         return (
             <div>
-                <button className="Game-menu-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
+                <button style={style} className="Manager-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
                 <FourBoards board={this.state.board}/>
             </div>
         )

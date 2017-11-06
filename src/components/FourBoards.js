@@ -13,13 +13,14 @@ class FourBoards extends Component {
                 Board.createEmptyBoard(),
                 Board.createEmptyBoard(),
                 Board.createEmptyBoard(),
-            ]
+            ],
+            gameMode: props.gameMode,
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.board !== this.state.board) {
-            this.handleClickGameStart('nomal');
+            this.gameStart('nomal');
         }
     }
 
@@ -39,7 +40,7 @@ class FourBoards extends Component {
         return codeData;
     }
 
-    handleClickGameStart = (gameMode) => {
+    gameStart = () => {
         const codeData = this.getBoardData();
         let quardBoards = [
             Board.createEmptyBoard(),
@@ -47,7 +48,7 @@ class FourBoards extends Component {
             Board.createEmptyBoard(),
             Board.createEmptyBoard(),
         ];
-        if (gameMode === 'nomal') {
+        if (this.state.gameMode === 'nomal') {
             let i = 0;
             while(codeData.length > 0) {
                 let randomIndex = Math.floor(Math.random()*4827318 % codeData.length);
@@ -60,7 +61,6 @@ class FourBoards extends Component {
                 quardBoards[index % 4][squareData.row][squareData.idx] = true;
             });
         }
-
         this.setState({
             boards: quardBoards
         })
@@ -68,16 +68,9 @@ class FourBoards extends Component {
 
 
     render() {
-        const style = {
-            display: 'table',
-            float: 'center'
-        };
+
         return (
             <div>
-                <div style={style}>
-                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this)}>Easy Game Start</button>
-                    <button className="Game-menu-btn" onClick={this.handleClickGameStart.bind(this, 'nomal')}>Nomal Game Start</button>
-                </div>
                 <Board boardKey="FireBrick " squares={this.state.boards[0]} onClick={() => null}></Board>
                 <Board boardKey="Yellow" squares={this.state.boards[1]} onClick={() => null}></Board>
                 <Board boardKey="YellowGreen" squares={this.state.boards[2]} onClick={() => null}></Board>
