@@ -3,12 +3,12 @@
  */
 import React, {Component} from 'react';
 import Board from './Board';
-import FourBoards from './FourBoards';
 import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
 import UTF8 from 'utf8';
 import fileSaver from 'file-saver';
 import HttpClient from './../HttpClient';
+import GameList from './GameList';
 
 class GameManager extends Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class GameManager extends Component {
         this.state = {
             board: Board.createEmptyBoard(),
             collectAnswer: "",
+            count: 1,
         }
     }
 
@@ -59,12 +60,15 @@ class GameManager extends Component {
 
     handleSaveBoard = () => {
         if (this.state.collectAnswer.length < 1) return;
-        HttpClient.post('game/add', {
-            data: Board.convertArray2Text(this.state.board),
-            collectAnswer: this.state.collectAnswer,
+        HttpClient.addGame({
+            board: Board.convertArray2Text(this.state.board),
+            collectAnswer: this.state.collectAnswer
+        }, (response) => {
+            this.setState({
+                collectAnswer: "",
+                count: this.state.count + 1,
+            })
         })
-            .then( response => {console.dir(response)})
-            .catch(err => {console.dir(err)})
     };
 
     handleSaveBoard2File = () => {
@@ -74,26 +78,31 @@ class GameManager extends Component {
         const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
         fileSaver.saveAs(blob, "cube-code-data.txt");
         this.setState({
-            collectAnswer: ""
+            collectAnswer: "",
+            count: this.state.count + 1,
         })
     };
 
     render() {
         return (
             <div>
-                <div className="Game-admin-menu">
+                <div className="Manager-menu">
                     <Board boardKey="main" onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
                     <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleLoadFiles.bind(this)}>
-                        <button className='Game-menu-btn'>Load</button>
+                        <button className='Manager-btn'>Load</button>
                     </ReactFileReader>
-                    <button className="Game-menu-btn" onClick={this.handleSaveBoard}>save</button>
+                    <button className="Manager-btn" onClick={this.handleSaveBoard.bind(this)}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
-                    <FourBoards board={this.state.board}></FourBoards>
+                    {/*<div style={style}>*/}
+                        {/*<button className="Game-menu-btn" gameMode='esay'>Easy Game Start</button>*/}
+                        {/*<button className="Game-menu-btn" gameMode='nomal'>Nomal Game Start</button>*/}
+                    {/*</div>*/}
+                    {/*<FourBoards board={this.state.board}></FourBoards>*/}
+                    <GameList count={this.state.count}></GameList>
                 </div>
             </div>
         )
     }
 }
-
 export default GameManager;
