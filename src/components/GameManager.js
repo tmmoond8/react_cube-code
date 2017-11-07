@@ -87,7 +87,7 @@ class GameManager extends Component {
         return (
             <div>
                 <div className="Manager-menu">
-                    <Board boardKey="main" onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
+                    <Board boardColor="black" onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
                     <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleLoadFiles.bind(this)}>
                         <button className='Manager-btn'>Load</button>
                     </ReactFileReader>

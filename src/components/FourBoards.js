@@ -71,10 +71,10 @@ class FourBoards extends Component {
 
         return (
             <div>
-                <Board boardKey="FireBrick " squares={this.state.boards[0]} onClick={() => null}></Board>
-                <Board boardKey="Yellow" squares={this.state.boards[1]} onClick={() => null}></Board>
-                <Board boardKey="YellowGreen" squares={this.state.boards[2]} onClick={() => null}></Board>
-                <Board boardKey="DarkTurquoise" squares={this.state.boards[3]} onClick={() => null}></Board>
+                <Board boardColor="FireBrick " squares={this.state.boards[0]} onClick={null}></Board>
+                <Board boardColor="Yellow" squares={this.state.boards[1]} onClick={null}></Board>
+                <Board boardColor="YellowGreen" squares={this.state.boards[2]} onClick={null}></Board>
+                <Board boardColor="DarkTurquoise" squares={this.state.boards[3]} onClick={null}></Board>
             </div>
         )
     };
