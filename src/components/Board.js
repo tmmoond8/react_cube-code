@@ -41,7 +41,7 @@ class Board extends Component {
             }).join("");
         }).join("\n");
         return board;
-    }
+    };
 
     static createEmptyBoard = () => {
         let squares = [];
@@ -59,7 +59,7 @@ class Board extends Component {
     renderSquare = (row, idx) => {
         return (
             <Square
-                boardKey={this.props.boardKey}
+                boardColor={this.props.boardColor}
                 onClick={this.props.onClick}
                 row={row} idx={idx} value={this.state.squares[row][idx]}/>
         )

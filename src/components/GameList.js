@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import Board from './Board';
 import HttpClient from './../HttpClient';
+import GameListItem from './GameListItem';
 
 class GameList extends Component {
     constructor(props) {
@@ -11,8 +12,20 @@ class GameList extends Component {
         this.state = {
             boardList: [],
             count: props.count,
+            selectIndex: -1,
+            selectBoard: Board.createEmptyBoard()
         }
     }
+
+    handleClickListItem = (index) => {
+        if (this.state.selectIndex === index) {
+            return;
+        }
+        this.setState({
+            selectIndex: index,
+            selectBoard: this.state.boardList[index].data
+        });
+    };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.count !== this.state.count) {
@@ -27,11 +40,17 @@ class GameList extends Component {
     render() {
         return (
             <div className="Manager-menu">
-                <Board boardKey="gameList" squares={Board.createEmptyBoard()} onClick={()=> null}></Board>
+                <Board boardColor="black" squares={this.state.selectBoard} onClick={null}></Board>
+                <h2>{this.state.boardList.length}</h2>
                 <ul className="List-list">
                     {this.state.boardList.map((board, index) => {
                         return (
-                            <li>{board.collectAnswer}</li>
+                            <GameListItem
+                                onClick={this.handleClickListItem.bind(this, index)}
+                                selectIndex={this.state.selectIndex}
+                                index={index}
+                                collectAnswer={board.collectAnswer}
+                            />
                         )
                     })}
                 </ul>
