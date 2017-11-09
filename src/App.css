@@ -2,6 +2,10 @@ div, h3, h2{
   display: inline;
 }
 
+.Common-Block {
+  display: block;
+}
+
 .App {
   text-align: center;
 }
@@ -84,4 +88,22 @@ div, h3, h2{
 
 .List-list {
   display: inline-grid;
+}
+
+.Chat-Message-List {
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll;
+  padding: 5px 20px 5px 20px;
+}
+
+.Chat-Message-Item {
+  display: list-item;
+}
+
+.Chat-UserName {
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
 }

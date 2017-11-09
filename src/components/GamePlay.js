@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
 import Board from './Board';
 import HttpClient from './../HttpClient';
+import io from 'socket.io-client';
+import Chat from './Chat';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -13,6 +15,7 @@ class GamePlay extends Component {
             board : Board.createEmptyBoard(),
             collectAnswer: '',
         }
+        this.socket = io('http://localhost:8888');
     }
 
     componentDidMount() {
@@ -36,6 +39,7 @@ class GamePlay extends Component {
             <div>
                 <button style={style} className="Manager-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
                 <FourBoards board={this.state.board}/>
+                <Chat></Chat>
             </div>
         )
     }
