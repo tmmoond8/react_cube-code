@@ -2,7 +2,7 @@
  * Created by moonti on 2017. 11. 4..
  */
 import axios from 'axios';
-import Board from './components/Board';
+import Board from './../components/Board';
 
 
 var instance = axios.create({

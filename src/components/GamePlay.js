@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
 import Board from './Board';
-import HttpClient from './../HttpClient';
-import io from 'socket.io-client';
+import HttpClient from './../modules/HttpClient';
 import Chat from './Chat';
+import SocketChat from './../modules/SocketClient';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -15,9 +15,7 @@ class GamePlay extends Component {
             board : Board.createEmptyBoard(),
             collectAnswer: '',
         }
-        this.socket = io('http://localhost:8888');
     }
-
     componentDidMount() {
         this.handleClickGameLoad();
     }

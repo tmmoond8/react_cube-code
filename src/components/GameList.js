@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import Board from './Board';
-import HttpClient from './../HttpClient';
+import HttpClient from './../modules/HttpClient';
 import GameListItem from './GameListItem';
 
 class GameList extends Component {
