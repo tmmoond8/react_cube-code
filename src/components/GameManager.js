@@ -7,7 +7,7 @@ import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
 import UTF8 from 'utf8';
 import fileSaver from 'file-saver';
-import HttpClient from './../HttpClient';
+import HttpClient from './../modules/HttpClient';
 import GameList from './GameList';
 
 class GameManager extends Component {

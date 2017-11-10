@@ -4,7 +4,9 @@
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
 import Board from './Board';
-import HttpClient from './../HttpClient';
+import HttpClient from './../modules/HttpClient';
+import Chat from './Chat';
+import SocketChat from './../modules/SocketClient';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -14,7 +16,6 @@ class GamePlay extends Component {
             collectAnswer: '',
         }
     }
-
     componentDidMount() {
         this.handleClickGameLoad();
     }
@@ -36,6 +37,7 @@ class GamePlay extends Component {
             <div>
                 <button style={style} className="Manager-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
                 <FourBoards board={this.state.board}/>
+                <Chat></Chat>
             </div>
         )
     }
