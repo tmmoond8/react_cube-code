@@ -18,11 +18,16 @@ let SocketChat = {
 }
 
 class Message {
-    constructor(userName, message) {
-        this.userName = userName || 'Unknwon';
+    constructor(user, message) {
+        this.user = user;
         this.message = message || '';
+        this.messageId = Message.createMessageId();
+    }
+
+    static createMessageId = () => {
+        const toDay = new Date().toISOString().slice(0,10).replace(/-/g,"")
+        return toDay + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 }
-
 export default SocketChat;
 export {Message};

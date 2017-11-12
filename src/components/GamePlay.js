@@ -6,7 +6,6 @@ import FourBoards from "./FourBoards";
 import Board from './Board';
 import HttpClient from './../modules/HttpClient';
 import Chat from './Chat';
-import SocketChat from './../modules/SocketClient';
 
 class GamePlay extends Component {
     constructor(props) {
@@ -14,11 +13,23 @@ class GamePlay extends Component {
         this.state = {
             board : Board.createEmptyBoard(),
             collectAnswer: '',
+            user: {
+                id: 3955,
+                name: 'Guest',
+                emoji: '🔥'
+            }
         }
-    }
+    };
+
+    handleLogin = (user) => {
+        this.setState({
+            user: user
+        });
+    };
+
     componentDidMount() {
         this.handleClickGameLoad();
-    }
+    };
 
     handleClickGameLoad = () => {
         HttpClient.getGameList((gameList) => this.setState(
@@ -37,10 +48,10 @@ class GamePlay extends Component {
             <div>
                 <button style={style} className="Manager-btn" onClick={this.handleClickGameLoad.bind(this)}>Online Game Load</button>
                 <FourBoards board={this.state.board}/>
-                <Chat></Chat>
+                <Chat onLogin={this.handleLogin.bind(this)} user={this.state.user}></Chat>
             </div>
         )
-    }
+    };
 }
 
 export default GamePlay;
