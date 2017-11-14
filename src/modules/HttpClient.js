@@ -3,10 +3,11 @@
  */
 import axios from 'axios';
 import Board from './../components/Board';
+import Config  from './../config';
 
 
 var instance = axios.create({
-    baseURL: 'http://localhost:8888/cubecode/',
+    baseURL: Config.httpClient.baseURL,
     timeout: 1000,
 });
 

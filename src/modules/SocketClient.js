@@ -2,9 +2,15 @@
  * Created by moonti on 2017. 11. 4..
  */
 import io from 'socket.io-client';
+import Config from './../config';
 
-let socket = io('http://localhost:8888');
-console.log('socket io client');
+let socket = io(Config.socketClient.baseURL);
+socket.on('connect', () => {
+    console.log('socket connect');
+});
+socket.on('disconnect', () => {
+    console.log('socket disconnect');
+});
 
 let SocketChat = {
     sendMessage: (event, message) => {
