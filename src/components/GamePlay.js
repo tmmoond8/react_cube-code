@@ -4,8 +4,8 @@
 import React, {Component} from 'react';
 import FourBoards from "./FourBoards";
 import Board from './Board';
-import HttpClient from './../modules/HttpClient';
 import Chat from './Chat';
+import SocketClient from './../modules/SocketClient'
 
 class GamePlay extends Component {
     constructor(props) {
@@ -19,6 +19,12 @@ class GamePlay extends Component {
                 emoji: '🔥'
             }
         }
+        SocketClient.addEventOn('cubecode-game-one', (gameData) => {
+            this.setState({
+                board: Board.convertText2Array(gameData.data),
+                collectAnswer: gameData.collectAnswer
+            });
+        });
     };
 
     handleLogin = (user) => {
@@ -28,16 +34,9 @@ class GamePlay extends Component {
     };
 
     componentDidMount() {
-        this.handleClickGameLoad();
     };
 
     handleClickGameLoad = () => {
-        HttpClient.getGameList((gameList) => this.setState(
-            {
-                board: gameList[0].data,
-                collectAnswer: gameList[0].collectAnswer
-            }
-        ))
     };
 
     render() {
