@@ -11,6 +11,8 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
     console.log('socket disconnect');
 });
+let socket = io(Config.baseURI);
+console.log('socket io client', Config.baseURI);
 
 let SocketChat = {
     sendMessage: (event, message) => {
@@ -31,7 +33,8 @@ class Message {
     }
 
     static createMessageId = () => {
-        const toDay = new Date().toISOString().slice(0,10).replace(/-/g,"")
+        const toDay = new Date().toISOString().slice(0,19)
+            .replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
         return toDay + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 }
