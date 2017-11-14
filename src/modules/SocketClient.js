@@ -2,7 +2,9 @@
  * Created by moonti on 2017. 11. 4..
  */
 import io from 'socket.io-client';
+import Config from './../config/default';
 
+<<<<<<< Updated upstream
 let socket = io('http://localhost:8888');
 socket.on('connect', () => {
     console.log('socket connect');
@@ -10,6 +12,10 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
     console.log('socket disconnect');
 });
+=======
+let socket = io(Config.baseURI);
+console.log('socket io client', Config.baseURI);
+>>>>>>> Stashed changes
 
 let SocketChat = {
     sendMessage: (event, message) => {
