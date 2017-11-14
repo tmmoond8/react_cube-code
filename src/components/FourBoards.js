@@ -8,6 +8,7 @@ class FourBoards extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            board: props.board,
             boards: [
                 Board.createEmptyBoard(),
                 Board.createEmptyBoard(),
@@ -20,12 +21,15 @@ class FourBoards extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.board !== this.state.board) {
-            this.gameStart('nomal');
+            this.gameStart(nextProps.board);
+            this.setState({
+                board: nextProps.board
+            });
         }
     }
 
-    getBoardData = () => {
-        const board = Array.prototype.slice.call(this.props.board);
+    getBoardData = (nextBoard) => {
+        const board = Array.prototype.slice.call(nextBoard);
         let codeData = [];
         board.forEach((row, rowIndex) => {
             row.forEach((value, columnIndex) => {
@@ -40,8 +44,8 @@ class FourBoards extends Component {
         return codeData;
     }
 
-    gameStart = () => {
-        const codeData = this.getBoardData();
+    gameStart = (nextBoard) => {
+        const codeData = this.getBoardData(nextBoard);
         let quardBoards = [
             Board.createEmptyBoard(),
             Board.createEmptyBoard(),
