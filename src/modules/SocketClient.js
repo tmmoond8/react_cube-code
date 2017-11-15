@@ -5,15 +5,13 @@ import io from 'socket.io-client';
 import Config from './../config';
 
 let socket = io(Config.socketClient.baseURL);
+console.log('socket io client', Config.socketClient.baseURL);
 socket.on('connect', () => {
     console.log('socket connect');
 });
 socket.on('disconnect', () => {
     console.log('socket disconnect');
 });
-let socket = io(Config.baseURI);
-console.log('socket io client', Config.baseURI);
-
 let SocketChat = {
     sendMessage: (event, message) => {
         socket.emit(event, message);

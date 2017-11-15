@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 import Board from './../components/Board';
-import Config  from './../config';
+import Config from './../config';
 
 
 var instance = axios.create({

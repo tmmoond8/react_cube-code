@@ -29,6 +29,18 @@ class Chat extends Component {
                 messages: messages
             })
         });
+        SocketClient.addEventOn('test', (msg) => {
+            const message = {
+                user: {id: "12123213", name: '테스트', emoji: '👩'},
+                message: msg,
+                messageId: "212321313"
+            }
+            let messages = Array.prototype.slice.call(this.state.messages);
+            messages.push(message);
+            this.setState({
+                messages: messages
+            })
+        });
     };
 
     componentWillReceiveProps(nextProps) {

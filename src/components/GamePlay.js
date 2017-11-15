@@ -6,6 +6,7 @@ import FourBoards from "./FourBoards";
 import Board from './Board';
 import Chat from './Chat';
 import SocketClient from './../modules/SocketClient';
+import UserBoard from './UserBoard';
 
 
 class GamePlay extends Component {
@@ -23,8 +24,7 @@ class GamePlay extends Component {
         SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
         SocketClient.addEventOn('cubecode-game-one', (gameData) => {
             this.setState({
-                board: Board.convertText2Array(gameData.data),
-                collectAnswer: gameData.collectAnswer
+                board: Board.convertText2Array(gameData),
             });
         });
     };
@@ -41,7 +41,7 @@ class GamePlay extends Component {
         }
         return (
             <div>
-                <button style={style} className="Manager-btn" >Online Game Load</button>
+                <UserBoard></UserBoard>
                 <FourBoards gameMode="nomal" board={this.state.board}/>
                 <Chat onLogin={this.handleLogin.bind(this)} user={this.state.user}></Chat>
             </div>
