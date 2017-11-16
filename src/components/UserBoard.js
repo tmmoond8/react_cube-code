@@ -27,11 +27,14 @@ class UserBoard extends Component {
         return (
             <div style={style}>ddsdsds
                 <ul>
-                    {Object.keys(this.state.userList).map((key) => {
-                        return (
-                            <li>{this.state.userList[key].name}</li>
-                        )
-                    })}
+                    {Object.keys(this.state.userList)
+                        .map((key) => this.state.userList[key])
+                        .map((user) => {
+                            return (
+                                <li>{user.emoji} {user.name} {user.score}</li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         )
