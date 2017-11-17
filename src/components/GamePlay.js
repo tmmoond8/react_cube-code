@@ -13,7 +13,10 @@ class GamePlay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board : Board.createEmptyBoard(),
+            boards : [
+                Board.createEmptyBoard(), Board.createEmptyBoard(),
+                Board.createEmptyBoard(), Board.createEmptyBoard()
+                ],
             collectAnswer: '',
             user: {
                 id: 3955,
@@ -24,7 +27,7 @@ class GamePlay extends Component {
         SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
         SocketClient.addEventOn('cubecode-game-one', (gameData) => {
             this.setState({
-                board: Board.convertText2Array(gameData),
+                boards: gameData.map((board) => Board.convertText2Array(board)) ,
             });
         });
     };
@@ -42,7 +45,7 @@ class GamePlay extends Component {
         return (
             <div>
                 <UserBoard></UserBoard>
-                <FourBoards gameMode="nomal" board={this.state.board}/>
+                <FourBoards gameMode="nomal" boards={this.state.boards}/>
                 <Chat onLogin={this.handleLogin.bind(this)} user={this.state.user}></Chat>
             </div>
         )
