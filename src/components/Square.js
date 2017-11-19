@@ -10,8 +10,16 @@ class Square extends React.Component {
             value: props.value
         };
         this.color = this.props.boardColor;
-
+        this.COLOR_MAP = {
+            '0' : 'none',
+            '1' : 'Black',
+            '2' : 'FireBrick',
+            '3' : 'Yellow',
+            '4' : 'YellowGreen',
+            '5' : 'DarkTurquoise',
+        }
     }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.value !== this.state.value) {
             this.setState({ value: nextProps.value });
@@ -19,7 +27,7 @@ class Square extends React.Component {
     }
 
     getStyle = () => {
-        return { background: this.state.value ? this.color : 'none'}
+        return { background: this.COLOR_MAP[this.state.value]}
     };
 
     handleClick = () => {

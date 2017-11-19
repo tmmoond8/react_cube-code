@@ -27,7 +27,7 @@ class GamePlay extends Component {
         SocketClient.addEventOn = SocketClient.addEventOn.bind(this);
         SocketClient.addEventOn('cubecode-game-one', (gameData) => {
             this.setState({
-                boards: gameData.map((board) => Board.convertText2Array(board)) ,
+                boards: gameData.map((board) => board),
             });
         });
     };
@@ -39,9 +39,6 @@ class GamePlay extends Component {
     };
 
     render() {
-        let style = {
-            display: 'block'
-        }
         return (
             <div>
                 <UserBoard></UserBoard>

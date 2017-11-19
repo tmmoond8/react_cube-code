@@ -2,9 +2,7 @@
  * Created by moonti on 2017. 11. 4..
  */
 import axios from 'axios';
-import Board from './../components/Board';
 import Config from './../config';
-
 
 var instance = axios.create({
     baseURL: Config.httpClient.baseURL,
@@ -16,7 +14,7 @@ instance.getGameList = (callback) => {
         .then(function (result) {
             let gameBoardArray = result.data.map((gameData) => {
                 return {
-                    data: Board.convertText2Array(gameData.data), collectAnswer: gameData.collectAnswer
+                    data: gameData.data.split('\n'), collectAnswer: gameData.collectAnswer
                 }
             });
             callback(gameBoardArray);
