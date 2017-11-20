@@ -6,7 +6,6 @@ import Board from './Board';
 import ReactFileReader from 'react-file-reader';
 import BASE64 from 'base-64';
 import UTF8 from 'utf8';
-import fileSaver from 'file-saver';
 import HttpClient from './../modules/HttpClient';
 import GameList from './GameList';
 
@@ -52,7 +51,16 @@ class GameManager extends Component {
 
     handleClickSquare = (row, idx) => {
         let board = Array.prototype.slice.call(this.state.board);
-        board[row][idx] = !board[row][idx];
+        const data = board[row].charAt(idx);
+        let temp;
+        if (data === '1') {
+            temp = '0';
+        } else if(data === '0') {
+            temp = '1';
+        } else {
+            return;
+        }
+        board[row] = board[row].substring(0, idx) + temp + board[row].substring(idx + 1, 11);
         this.setState({
             board : board
         });
@@ -61,7 +69,7 @@ class GameManager extends Component {
     handleSaveBoard = () => {
         if (this.state.collectAnswer.length < 1) return;
         HttpClient.addGame({
-            board: Board.convertArray2Text(this.state.board),
+            board: this.state.board,
             collectAnswer: this.state.collectAnswer
         }, (response) => {
             this.setState({
@@ -71,17 +79,17 @@ class GameManager extends Component {
         })
     };
 
-    handleSaveBoard2File = () => {
-        if (this.state.collectAnswer.length < 1) return;
-        let board = Board.convertArray2Text(this.state.board);
-        board += ":" + this.state.collectAnswer;
-        const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
-        fileSaver.saveAs(blob, "cube-code-data.txt");
-        this.setState({
-            collectAnswer: "",
-            count: this.state.count + 1,
-        })
-    };
+    // handleSaveBoard2File = () => {
+    //     if (this.state.collectAnswer.length < 1) return;
+    //     let board = this.state.board;
+    //     board += ":" + this.state.collectAnswer;
+    //     const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
+    //     fileSaver.saveAs(blob, "cube-code-data.txt");
+    //     this.setState({
+    //         collectAnswer: "",
+    //         count: this.state.count + 1,
+    //     })
+    // };
 
     render() {
         return (

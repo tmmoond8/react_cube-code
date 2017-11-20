@@ -8,7 +8,6 @@ class FourBoards extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            board: props.board,
             boards: [
                 Board.createEmptyBoard(),
                 Board.createEmptyBoard(),
@@ -20,10 +19,10 @@ class FourBoards extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.board !== this.state.board) {
-            this.gameStart(nextProps.board);
+        if (nextProps.boards !== this.state.boards) {
+            // this.gameStart(nextProps.board);
             this.setState({
-                board: nextProps.board
+                boards: nextProps.boards
             });
         }
     }
