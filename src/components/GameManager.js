@@ -69,7 +69,7 @@ class GameManager extends Component {
     handleSaveBoard = () => {
         if (this.state.collectAnswer.length < 1) return;
         HttpClient.addGame({
-            board: this.state.board,
+            board: this.state.board.join('\n'),
             collectAnswer: this.state.collectAnswer
         }, (response) => {
             this.setState({
