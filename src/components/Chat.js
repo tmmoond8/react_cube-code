@@ -27,7 +27,14 @@ class Chat extends Component {
             messages.push(msg);
             this.setState({
                 messages: messages
-            })
+            });
+        });
+        SocketClient.addEventOn('notify', (msg) => {
+            let messages = Array.prototype.slice.call(this.state.messages);
+            messages.push(msg);
+            this.setState({
+                messages: messages
+            });
         });
         SocketClient.addEventOn('test', (msg) => {
             const message = {
@@ -63,9 +70,9 @@ class Chat extends Component {
         return (
             <div className="Common-Block">
                 <ul className="Chat-Message-List">
-                    {this.state.messages.map((msg) => {
+                    {this.state.messages.map((message) => {
                         return (
-                            <ChatMessageItem user={msg.user} message={msg.message}/>
+                            <ChatMessageItem message={message}/>
                         )
                     })}
                 </ul>
