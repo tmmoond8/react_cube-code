@@ -31,7 +31,7 @@ class UserBoard extends Component {
                         .map((key) => this.state.userList[key])
                         .map((user) => {
                             return (
-                                <li>{user.emoji} {user.name} {user.score}</li>
+                                <li key={user.id}>{user.emoji} {user.name} {user.score}</li>
                             )
                         })
                     }
