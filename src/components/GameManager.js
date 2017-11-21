@@ -33,7 +33,7 @@ class GameManager extends Component {
             const collectAnswer = UTF8.decode(bytes[1]);
             const textArray = bytes[0].split("\n");
             let loadSqaures = [];
-            textArray.map(function(row) {
+            textArray.forEach((row) => {
                 loadSqaures.push(
                     row.split("")
                     .filter((value) =>  (value >= "0" && value <= "9"))
@@ -79,34 +79,17 @@ class GameManager extends Component {
         })
     };
 
-    // handleSaveBoard2File = () => {
-    //     if (this.state.collectAnswer.length < 1) return;
-    //     let board = this.state.board;
-    //     board += ":" + this.state.collectAnswer;
-    //     const blob = new Blob([board], {type: "text/plain;charset=utf-8"});
-    //     fileSaver.saveAs(blob, "cube-code-data.txt");
-    //     this.setState({
-    //         collectAnswer: "",
-    //         count: this.state.count + 1,
-    //     })
-    // };
-
     render() {
         return (
             <div>
                 <div className="Manager-menu">
-                    <Board boardColor="black" onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
+                    <Board onClick={this.handleClickSquare.bind(this)} squares={this.state.board}></Board>
                     <ReactFileReader base64={true} fileTypes={[".txt"]} handleFiles={this.handleLoadFiles.bind(this)}>
                         <button className='Manager-btn'>Load</button>
                     </ReactFileReader>
                     <button className="Manager-btn" onClick={this.handleSaveBoard.bind(this)}>save</button>
                     <label for="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
-                    {/*<div style={style}>*/}
-                        {/*<button className="Game-menu-btn" gameMode='esay'>Easy Game Start</button>*/}
-                        {/*<button className="Game-menu-btn" gameMode='nomal'>Nomal Game Start</button>*/}
-                    {/*</div>*/}
-                    {/*<FourBoards board={this.state.board}></FourBoards>*/}
                     <GameList count={this.state.count}></GameList>
                 </div>
             </div>
