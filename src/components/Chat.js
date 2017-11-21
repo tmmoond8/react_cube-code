@@ -65,7 +65,7 @@ class Chat extends Component {
                 <ul className="Chat-Message-List">
                     {this.state.messages.map((msg) => {
                         return (
-                            <ChatMessageItem user={msg.user} message={msg.message}/>
+                            <ChatMessageItem key={msg.messageId} user={msg.user} message={msg.message}/>
                         )
                     })}
                 </ul>
