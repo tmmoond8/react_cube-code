@@ -12,6 +12,12 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
     console.log('socket disconnect');
 });
+
+const MESSAGE_TYPE = {
+    BROADCAST : 0,
+    NOTIFY : 32,
+};
+
 let SocketChat = {
     sendMessage: (event, message) => {
         socket.emit(event, message);
@@ -28,6 +34,7 @@ class Message {
         this.user = user;
         this.message = message || '';
         this.messageId = Message.createMessageId();
+        this.type = MESSAGE_TYPE.BROADCAST;
     }
 
     static createMessageId = () => {
@@ -36,5 +43,7 @@ class Message {
         return toDay + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 }
+
 export default SocketChat;
 export {Message};
+export {MESSAGE_TYPE};
