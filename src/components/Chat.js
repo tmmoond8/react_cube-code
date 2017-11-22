@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import ChatMessageItem from './ChatMessageItem';
 import ChatMessageInput from './ChatMessageInput';
 import SocketClient, {Message} from './../modules/SocketClient';
+import PropTypes from 'prop-types';
 
 class Chat extends Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class Chat extends Component {
                 <ul className="Chat-Message-List">
                     {this.state.messages.map((message) => {
                         return (
-                            <ChatMessageItem message={message}/>
+                            <ChatMessageItem key={message.messageId} message={message}/>
                         )
                     })}
                 </ul>
@@ -84,4 +85,8 @@ class Chat extends Component {
     };
 }
 
+Chat.propTypes = {
+    user: PropTypes.object.isRequired,
+    onLogin: PropTypes.func.isRequired,
+}
 export default Chat;
