@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import Board from './Board';
 import HttpClient from './../modules/HttpClient';
 import GameListItem from './GameListItem';
+import PropTypes from 'prop-types';
 
 class GameList extends Component {
     constructor(props) {
@@ -40,12 +41,13 @@ class GameList extends Component {
     render() {
         return (
             <div className="Manager-menu">
-                <Board boardColor="black" squares={this.state.selectBoard} onClick={null}></Board>
+                <Board squares={this.state.selectBoard} onClick={null}></Board>
                 <h2>{this.state.boardList.length}</h2>
                 <ul className="List-list">
                     {this.state.boardList.map((board, index) => {
                         return (
                             <GameListItem
+                                key={index}
                                 onClick={this.handleClickListItem.bind(this, index)}
                                 selectIndex={this.state.selectIndex}
                                 index={index}
@@ -57,6 +59,10 @@ class GameList extends Component {
             </div>
         )
     }
+}
+
+GameList.propTypes = {
+    count: PropTypes.number.isRequired
 }
 
 export default GameList;

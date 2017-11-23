@@ -88,7 +88,7 @@ class GameManager extends Component {
                         <button className='Manager-btn'>Load</button>
                     </ReactFileReader>
                     <button className="Manager-btn" onClick={this.handleSaveBoard.bind(this)}>save</button>
-                    <label for="collect-answers">collect answers : </label>
+                    <label htmlFor="collect-answers">collect answers : </label>
                     <input onChange={(e) => this.handleChangeCollectAnswer(e.target.value)} id="collect-answers" type="text" value={this.state.collectAnswer}></input>
                     <GameList count={this.state.count}></GameList>
                 </div>
@@ -96,4 +96,5 @@ class GameManager extends Component {
         )
     }
 }
+
 export default GameManager;

@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import Square from './Square';
+import PropTypes from 'prop-types';
 
 class Board extends Component {
     constructor(props) {
@@ -27,9 +28,8 @@ class Board extends Component {
     renderSquare = (data, rowIdx, columnIdx) => {
         return (
             <Square
-                boardColor={this.props.boardColor}
                 onClick={this.props.onClick}
-                row={rowIdx} idx={columnIdx} value={data}
+                rowIdx={rowIdx} columnIdx={columnIdx} value={data}
                 key={rowIdx*11 + columnIdx}   
             />
         )
@@ -58,6 +58,10 @@ class Board extends Component {
             </div>
         )
     };
+    
 }
-
+Board.propTypes = {
+    squares: PropTypes.array.isRequired,
+    onClick: PropTypes.func
+}
 export default Board;

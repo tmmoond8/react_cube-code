@@ -2,6 +2,7 @@
  * Created by moonti on 2017. 10. 23..
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Square extends React.Component {
     constructor(props) {
@@ -9,7 +10,6 @@ class Square extends React.Component {
         this.state = {
             value: props.value
         };
-        this.color = this.props.boardColor;
         this.COLOR_MAP = {
             '0' : 'none',
             '1' : 'Black',
@@ -32,7 +32,7 @@ class Square extends React.Component {
 
     handleClick = () => {
         if (!this.props.onClick) return;
-        this.props.onClick(this.props.row, this.props.idx);
+        this.props.onClick(this.props.rowIdx, this.props.columnIdx);
         this.setState({
             value: !this.state.value
         });
@@ -43,6 +43,13 @@ class Square extends React.Component {
             <div onClick={this.handleClick} className="Square-square" style={this.getStyle()}></div>
         )
     }
+}
+
+Square.propTypes = {
+    value: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    columnIdx: PropTypes.number.isRequired,
+    rowIdx: PropTypes.number.isRequired,
 }
 
 export default Square;

@@ -2,6 +2,7 @@
  * Created by tmmoon on 17. 11. 7.
  */
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class GameListItem extends Component {
     constructor(props) {
@@ -30,6 +31,13 @@ class GameListItem extends Component {
             </li>
         )
     }
+}
+
+GameListItem.propTypes = {
+    selectIndex: PropTypes.number.isRequired,
+    index: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+    collectAnswer: PropTypes.string.isRequired
 }
 
 export default GameListItem;

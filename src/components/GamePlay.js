@@ -8,7 +8,6 @@ import Chat from './Chat';
 import SocketClient from './../modules/SocketClient';
 import UserBoard from './UserBoard';
 
-
 class GamePlay extends Component {
     constructor(props) {
         super(props);
@@ -69,8 +68,8 @@ class GamePlay extends Component {
         return (
             <div>
                 <UserBoard></UserBoard>
-                <FourBoards gameMode="nomal" boards={this.state.boards}/>
-                <Board gameMode="nomal" squares={this.state.collectBoard}/>
+                <FourBoards boards={this.state.boards}/>
+                <Board squares={this.state.collectBoard}/>
                 <Chat onLogin={this.handleLogin.bind(this)} user={this.state.user}></Chat>
             </div>
         )

@@ -33,14 +33,14 @@ class Message {
     constructor(user, message) {
         this.user = user;
         this.message = message || '';
-        this.messageId = Message.createMessageId();
         this.type = MESSAGE_TYPE.BROADCAST;
     }
 
     static createMessageId = () => {
-        const toDay = new Date().toISOString().slice(0,19)
-            .replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
-        return toDay + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        const toDay = new Date().toISOString()
+        //.replace(/-/g,"").replace(/t/gi, "").replace(/:/g, "");
+        console.log(toDay);
+        return toDay// + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
 }
 

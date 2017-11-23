@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {MESSAGE_TYPE} from './../modules/SocketClient';
+import PropTypes from 'prop-types';
 
 class ChatMessageItem extends Component {
     constructor(props) {
@@ -48,6 +49,10 @@ class ChatMessageItem extends Component {
             </li>
         )
     };
+}
+
+ChatMessageItem.propTypes = {
+    message: PropTypes.object.isRequired
 }
 
 export default ChatMessageItem;

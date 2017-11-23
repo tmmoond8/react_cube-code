@@ -2,6 +2,7 @@
  * Created by tmmoon on 17. 11. 9.
  */
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class ChatMessageInput extends Component {
     constructor(props) {
@@ -35,6 +36,10 @@ class ChatMessageInput extends Component {
              />
         )
     };
+}
+
+ChatMessageInput.propTypes = {
+    onSendMessage: PropTypes.func.isRequired
 }
 
 export default ChatMessageInput;

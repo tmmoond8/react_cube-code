@@ -3,28 +3,23 @@
  */
 import React, {Component} from 'react';
 import Board from './Board';
+import PropTypes from 'prop-types';
 
 class FourBoards extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            boards: [
-                Board.createEmptyBoard(),
-                Board.createEmptyBoard(),
-                Board.createEmptyBoard(),
-                Board.createEmptyBoard(),
-            ],
+            boards: props.boards,
             gameMode: props.gameMode,
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.boards !== this.state.boards) {
-            // this.gameStart(nextProps.board);
             this.setState({
                 boards: nextProps.boards
             });
-        }
+        };
     }
 
     getBoardData = (nextBoard) => {
@@ -74,12 +69,22 @@ class FourBoards extends Component {
 
         return (
             <div>
-                <Board boardColor="FireBrick " squares={this.state.boards[0]} onClick={null}></Board>
-                <Board boardColor="Yellow" squares={this.state.boards[1]} onClick={null}></Board>
-                <Board boardColor="YellowGreen" squares={this.state.boards[2]} onClick={null}></Board>
-                <Board boardColor="DarkTurquoise" squares={this.state.boards[3]} onClick={null}></Board>
+                <Board squares={this.state.boards[0]} onClick={null}></Board>
+                <Board squares={this.state.boards[1]} onClick={null}></Board>
+                <Board squares={this.state.boards[2]} onClick={null}></Board>
+                <Board squares={this.state.boards[3]} onClick={null}></Board>
             </div>
         )
     };
 }
+
+FourBoards.propTypes = {
+    gameMode: PropTypes.string,
+    boards: PropTypes.array.isRequired,
+
+}
+FourBoards.defaultProps = {
+    gameMode: 'normal'
+}
+
 export default FourBoards;
